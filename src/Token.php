@@ -439,6 +439,24 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
 
         return $this->signature;
     }
+
+    public function getPropertiesAccessed()
+    {
+        $usedProperties = [];
+        $tokens         = $this->tokenStream->tokens();
+        $end            = $this->getEndTokenId();
+        for ($i = $this->id; $i <= $end; $i++) {
+            $token = $tokens[$i];
+            if ($token instanceof PHP_Token_VARIABLE && $token->text === '$this' && !($tokens[$i+3] instanceof PHP_Token_OPEN_BRACKET)) {
+                $propertyToken = $tokens[$i + 2];
+                if (!in_array($propertyToken->text, array_keys($usedProperties))) {
+                    $usedProperties[$propertyToken->text] = $propertyToken;
+                }
+            }
+        }
+        
+        return $usedProperties;
+    }
 }
 
 class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
