@@ -440,6 +440,9 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
         return $this->signature;
     }
 
+    /**
+     * @return array
+     */
     public function getPropertiesAccessed()
     {
         $usedProperties = [];
