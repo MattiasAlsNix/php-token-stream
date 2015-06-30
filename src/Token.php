@@ -445,7 +445,7 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
      */
     public function getPropertiesAccessed()
     {
-        $usedProperties = [];
+        $usedProperties = array();
         $tokens         = $this->tokenStream->tokens();
         $end            = $this->getEndTokenId();
         for ($i = $this->id; $i <= $end; $i++) {
